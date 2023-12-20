@@ -11,8 +11,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late WebViewController _webViewController;
-
   @override
   void initState() {
     super.initState();
@@ -31,41 +29,26 @@ class _MainScreenState extends State<MainScreen> {
           ),
           PopupMenuButton<String>(
               onSelected: (value) {
-                // setState(() {
-                _webViewController.loadUrl(value);
-                // });
+                print(value);
               },
               itemBuilder: (context) => [
-                    const PopupMenuItem<String>(
-                      value: 'https://www.google.com',
-                      child: Text('구글'),
-                    ),
-                    const PopupMenuItem<String>(
-                      value: 'https://www.naver.com',
-                      child: Text('네이버'),
-                    ),
-                    const PopupMenuItem<String>(
-                      value: 'https://www.kakao.com',
-                      child: Text('카카오'),
-                    ),
-                  ]),
+                const PopupMenuItem<String>(
+                  value: 'https://www.google.com',
+                  child: Text('구글'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'https://www.naver.com',
+                  child: Text('네이버'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'https://www.kakao.com',
+                  child: Text('카카오'),
+                ),
+              ]),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          if (await _webViewController.canGoBack()) {
-            await _webViewController.goBack();
-            return false;
-          }
-          return true;
-        },
-        child: WebView(
-          initialUrl: 'https//flutter.dev',
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) {
-            _webViewController = controller;
-          },
-        ),
+      body: const WebView(
+        initialUrl: 'https://flutter.dev',
       ),
     );
   }
